@@ -8,7 +8,7 @@ class Book{
     }
 
    getInfo(){
-console.log(`title: ${this.title}, author: ${this.author} , year: ${this.year}`);
+return `title: ${this.title}, author: ${this.author} , year: ${this.year}`;
 }
 
 borrowBook(){
@@ -62,7 +62,13 @@ class Library{
      }
 
      findBooksByAuthor(authorName){
-        return this.books.filter(el => el.author === authorName);
+        let res = [];
+        for(let i=0;i<this.books.length;++i){
+            if(this.books[i].matchesAuthor(authorName))
+                res.push(this.books[i]);
+        }
+        return res;
+        
        
      }
 
@@ -90,7 +96,7 @@ class Library{
 }
 
      showAllBooks(){
-       this.books.forEach(book => book.getInfo());
+       this.books.forEach(book => console.log(book.getInfo()));
      }
 
      countBooks(){
@@ -105,23 +111,33 @@ class Library{
        return count;
      }
 
-     searchBooks(word){
-        let res =[];
-        for(let i=0;i<this.books.length;++i){
-        if(this.books[i].title.toLowerCase().includes(word.toLowerCase()))
-    res.push(this.books[i]);}
-return res;
-     }
+    searchBooks(word) {
+    let res = [];
 
-     getOldestBook(){
-        if(this.books.length === 0) return null;
-        let min = this.books[0].year;
-        for(let i = 1;i<this.books.length;++i){
-            if(this.books[i].year < min) min = this.books[i].year
+    for (let i = 0; i < this.books.length; i++) {
+        if (this.books[i].matchesTitle(word)) {
+            res.push(this.books[i]);
         }
-        return min;
-        
-     }
+    }
+
+    return res;
+}
+
+    getOldestBook() {
+    if (this.books.length === 0) return null;
+
+    let min = this.books[0].year;
+    let oldestBook = this.books[0];
+
+    for (let i = 1; i < this.books.length; i++) {
+        if (this.books[i].year < min) {
+            min = this.books[i].year;
+            oldestBook = this.books[i];
+        }
+    }
+
+    return oldestBook;
+}
 
 
 }
