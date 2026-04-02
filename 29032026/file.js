@@ -5,9 +5,9 @@ class Book{
     #isAvailable
 
     constructor(title,author,year){
-        this.#title=title;
-        this.#author=author;
-        this.#year=year;
+        this.title=title;
+        this.author=author;
+        this.year=year;
         this.#isAvailable = true;
     }
 
@@ -53,7 +53,7 @@ returnBook(){
     console.log("Its already available");
 }
 matchesTitle(word){
-  return this.#title.toLowerCase().includes(word.toLowerCase());
+  return this.title.toLowerCase().includes(word.toLowerCase());
 }
 getInfo(){
     return `title: ${this.title},author: ${this.author},year:${this.year}, isAvailable ${this.isAvailable}`;
@@ -63,7 +63,7 @@ class Reader{
 #name
 #borrowedBooks
 constructor(name){
-    this.#name=name;
+    this.name=name;
     this.#borrowedBooks = [];
 } 
 get name(){
@@ -81,10 +81,16 @@ get borrowedBooksCount(){
 }
 
 takeBook(book){
-    if(book.isAvailable){
-        this.#borrowedBooks.push(book);
-        book.borrowBook();
+    if(!book.isAvailable){
+        console.log("It is not available");
+        return;
     }
+    if(this.hasBook(book)){
+        console.log("Reader already has this book");
+        return;
+    }
+     this.#borrowedBooks.push(book);
+    book.borrowBook();
 }
 
 giveBackBook(book){
@@ -104,7 +110,7 @@ showBorrowedBooks(){
    return this.#borrowedBooks.map(el => el.title);
 }
 getInfo(){
-    return`${this.#name} has ${this.#borrowedBooks.length} borrowed books`;
+    return`${this.name} has ${this.#borrowedBooks.length} borrowed books`;
 }
 }   
 
@@ -114,7 +120,7 @@ class Library{
     #readers
 
     constructor(name){
-        this.#name = name;
+        this.name = name;
         this.#books = [];
         this.#readers = [];
     }
@@ -151,28 +157,35 @@ findBooksByAuthor(authorName){
     
 giveBookToReader(title, reader){
 const res = this.#books.find(el =>el.title === title);
-if(res){
-    reader.takeBook(res);
+if(!res){
+   console.log("this book not found");
+   return;
+}
+if(!res.isAvailable){
+    console.log("Its already borrowed");
     return;
 }
-console.log("book is not found");
+ reader.takeBook(res);
     }
 
     acceptBookFromReader(title, reader){
         const res = this.#books.find(el =>el.title === title);
-        if(res){
-            reader.giveBackBook(res);
+        if(!res){
+           console.log(" book is not found");
+           return;
+        }
+
+        if(!reader.hasBook(res)){
+            console.log("Reader has not this book");
             return;
         }
-        console.log(" book is not found");
+        reader.giveBackBook(res);
+       
     }
 
     showAvailableBooks(){
-    return this.#books
-               .filter(book => book.isAvailable)
-               .map(book => book.getInfo());
-
-    }
+    return this.#books.filter(book => book.isAvailable);
+}
 
     showAllBooks(){
         return this.#books.map(el=> el.getInfo());
