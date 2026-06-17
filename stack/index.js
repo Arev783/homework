@@ -4,7 +4,7 @@ class Stack {
   #size;
 
   constructor(initialCapacity = 16) {
-    this.#data = new Deque(8);
+    this.#data = new Deque(initialCapacity);
     this.#size = 0;
   }
 
@@ -14,11 +14,14 @@ class Stack {
   }
 
   pop() {
-    this.#data.pop_back();
+    if(this.isEmpty()) return undefined;
+   let val = this.#data.pop_back();
     this.#size--;
+    return val;
   }
 
   peek() {
+    if(this.isEmpty()) return undefined;
     return this.#data.back();
   }
 
@@ -36,7 +39,6 @@ class Stack {
   }
 
   toArray() {
-let arr = [];
     return this.#data.toArray();
   }
 
