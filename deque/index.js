@@ -238,17 +238,17 @@ else
     }
 }
 
-let s1 = new BucketedDeque(4);
-s1.push_front(5);
-s1.push_back(15);
-s1.push_front(165);
-s1.push_front(68);
-s1.push_back(11);
-console.log(s1.toArray());
-console.log(s1.pop_back());
-console.log(s1.toArray());
-console.log(s1.pop_front());
-console.log(s1.toArray());
-console.log(s1.at(0));
-console.log(s1._bucketIndex(2));
+// let s1 = new BucketedDeque(4);
+// s1.push_front(5);
+// s1.push_back(15);
+// s1.push_front(165);
+// s1.push_front(68);
+// s1.push_back(11);
+// console.log(s1.toArray());
+// console.log(s1.pop_back());
+// console.log(s1.toArray());
+// console.log(s1.pop_front());
+// console.log(s1.toArray());
+// console.log(s1.at(0));
+// console.log(s1._bucketIndex(2));
 export { BucketedDeque as Deque };
