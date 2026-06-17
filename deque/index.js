@@ -251,3 +251,4 @@ console.log(s1.pop_front());
 console.log(s1.toArray());
 console.log(s1.at(0));
 console.log(s1._bucketIndex(2));
+export { BucketedDeque as Deque };
